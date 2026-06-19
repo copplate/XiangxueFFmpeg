@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
         // Example of a call to a native method
         binding.sampleText.text = stringFromJNI()
+        binding.sampleText2.text = ffmpegInfo()
     }
 
     /**
@@ -24,6 +25,8 @@ class MainActivity : AppCompatActivity() {
      * which is packaged with this application.
      */
     external fun stringFromJNI(): String
+
+    private external fun ffmpegInfo(): String
 
     companion object {
         // Used to load the 'ffmpegpdfxiangxue' library on application startup.
