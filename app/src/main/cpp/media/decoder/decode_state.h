@@ -1,0 +1,15 @@
+//
+// Created by wyc on 2026/6/19.
+//
+
+#ifndef FFMPEGPDFXIANGXUE_DECODE_STATE_H
+#define FFMPEGPDFXIANGXUE_DECODE_STATE_H
+enum DecodeState {
+    STOP,
+    PREPARE,
+    START,
+    DECODING,
+    PAUSE,
+    FINISH
+};
+#endif //FFMPEGPDFXIANGXUE_DECODE_STATE_H
