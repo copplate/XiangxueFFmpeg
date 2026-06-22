@@ -1,6 +1,7 @@
 //
 // Created by wyc on 2026/6/20.
 //
+#include "native_render.h"
 NativeRender::NativeRender(JNIEnv *env, jobject surface) {
         m_surface_ref = env->NewGlobalRef(surface);
 }
@@ -46,4 +47,11 @@ void NativeRender::Render(OneFrame *one_frame) {
         }
         //释放窗口
         ANativeWindow_unlockAndPost(m_native_window);
+}
+
+void NativeRender::ReleaseRender() {
+        if (m_native_window != NULL) {
+                ANativeWindow_release(m_native_window);
+        }
+        av_free(&m_out_buffer);
 }
