@@ -2,6 +2,7 @@
 #include <string>
 #include <dlfcn.h>
 #include <android/log.h>
+#include "media/player.h"
 
 // ========= 关键修改：用 extern "C" 包裹 C 语言库的头文件 =========
 extern "C" {
@@ -25,6 +26,8 @@ Java_com_wwyc_ffmpegpdfxiangxue_MainActivity_stringFromJNI(
     return env->NewStringUTF(hello.c_str());
 }
 
+
+
 // 在某个函数中
 void checkLibraryLocation() {
     Dl_info info;
@@ -35,6 +38,29 @@ void checkLibraryLocation() {
 }
 
 extern "C" {
+
+JNIEXPORT jlong JNICALL
+Java_com_wwyc_ffmpegpdfxiangxue_FFmpegActivity_createPlayer(JNIEnv *env,
+                                                            jobject /* this */,
+                                                            jstring path,
+                                                            jobject surface) {
+    Player *player = new Player(env, path, surface);
+    return (jlong) player;
+}
+JNIEXPORT void JNICALL
+Java_com_wwyc_ffmpegpdfxiangxue_FFmpegActivity_play(JNIEnv *env,
+                                                    jobject /* this */,
+                                                    jlong player) {
+    Player *p = (Player *) player;
+    p->play();
+}
+JNIEXPORT void JNICALL
+Java_com_wwyc_ffmpegpdfxiangxue_FFmpegActivity_pause(JNIEnv *env,
+                                                     jobject /* this */,
+                                                     jlong player) {
+    Player *p = (Player *) player;
+    p->pause();
+}
 
 JNIEXPORT jstring JNICALL
 Java_com_wwyc_ffmpegpdfxiangxue_MainActivity_ffmpegInfo(JNIEnv *env, jobject /* this */)
@@ -106,5 +132,7 @@ Java_com_wwyc_ffmpegpdfxiangxue_MainActivity_ffmpegInfo(JNIEnv *env, jobject /* 
 
     return env->NewStringUTF(result.c_str());
 }
+
+
 
 } // extern "C"
